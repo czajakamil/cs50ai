@@ -58,10 +58,7 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-
-    # TODO
-    raise NotImplementedError
-
+    #TODO
 
 def person_id_for_name(name: str) -> int:
     """
@@ -113,10 +110,10 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    source = person_id_for_name(input("Name: "))
+    source = person_id_for_name(input("Source Person Name: "))
     if source is None:
         sys.exit("You didn't provided any person")
-    target = person_id_for_name(input("Name: "))
+    target = person_id_for_name(input("Final Person Name: "))
     if target is None:
         sys.exit("Target person not found.")
 

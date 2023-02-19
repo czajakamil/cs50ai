@@ -3,7 +3,7 @@ class Node():
         self.state = state
         self.parent = parent
         self.action = action
-
+        # We don't need to store the path cost, because we can calculate it on the end
 
 class StackFrontier():
     def __init__(self):
