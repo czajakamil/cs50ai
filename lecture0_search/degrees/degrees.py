@@ -63,7 +63,7 @@ def shortest_path(source, target):
     raise NotImplementedError
 
 
-def person_id_for_name(name):
+def person_id_for_name(name: str) -> int:
     """
     Returns the IMDB id for a person's name,
     resolving ambiguities as needed.
@@ -89,7 +89,7 @@ def person_id_for_name(name):
         return person_ids[0]
 
 
-def neighbors_for_person(person_id):
+def neighbors_for_person(person_id: int) -> set:
     """
     Returns (movie_id, person_id) pairs for people
     who starred with a given person.
@@ -103,6 +103,7 @@ def neighbors_for_person(person_id):
 
 
 def main():
+    # If command line arguments are provided, try to read large or small datasets
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
     directory = sys.argv[1] if len(sys.argv) == 2 else "large"
@@ -114,7 +115,7 @@ def main():
 
     source = person_id_for_name(input("Name: "))
     if source is None:
-        sys.exit("Person not found.")
+        sys.exit("You didn't provided any person")
     target = person_id_for_name(input("Name: "))
     if target is None:
         sys.exit("Person not found.")
