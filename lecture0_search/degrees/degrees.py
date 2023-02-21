@@ -58,7 +58,59 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-    #TODO
+   # Keep track of number of states explored
+    num_explored = 0
+
+    # Initialize frontier to just starting position
+    start = Node(state=source, parent=None, action=None)
+    frontier = QueueFrontier()
+    frontier.add(start)
+
+    # Initialize an empty explored set
+    explored = set()
+
+    # Keep looping until solution found
+    while True:
+
+        # If nothing left in the frontier, then no path
+        if frontier.empty():
+            return None
+        
+        # Chose a node from a frontier
+        node = frontier.remove()
+        num_explored += 1
+        print(num_explored)
+
+        # If node is the goal then we have a solution
+        if node.state == target:
+            actions = []
+            cells = []
+            while node.parent is not None:
+                actions.append(node.action)
+                cells.append(node.state)
+                node = node.parent
+            # Reverse the order of the lists
+            actions.reverse()
+            cells.reverse()
+            solution = []
+            for i in range(len(actions)):
+                for j in range(len(cells)):
+                    if i == j:
+                        solution.append((actions[i], cells[j]))
+            return solution
+        
+        # Mark node as explored
+        explored.add(node.state)
+
+
+        # Add neightbors to frontier
+        for action, state in neighbors_for_person(node.state):
+            # Check if state (next person) is in frontier to be explored or was explored before
+            if not frontier.contains_state(state) and state not in explored:
+                child = Node(state=state, parent=node, action=action)
+                frontier.add(child)
+
+
 
 def person_id_for_name(name: str) -> int:
     """
@@ -98,9 +150,11 @@ def neighbors_for_person(person_id: int) -> set:
             neighbors.add((movie_id, person_id))
     return neighbors
 
+# Próba rozwiązania TypeError
+def hash(self):
+        return hash(self.person_id) + hash(self.movie_id) + hash(self.parent_id)
 
 def main():
-    # If command line arguments are provided, try to read large or small datasets
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
     directory = sys.argv[1] if len(sys.argv) == 2 else "large"
@@ -110,12 +164,12 @@ def main():
     load_data(directory)
     print("Data loaded.")
 
-    source = person_id_for_name(input("Source Person Name: "))
+    source = person_id_for_name(input("Name: "))
     if source is None:
-        sys.exit("You didn't provided any person")
-    target = person_id_for_name(input("Final Person Name: "))
+        sys.exit("Person not found.")
+    target = person_id_for_name(input("Name: "))
     if target is None:
-        sys.exit("Target person not found.")
+        sys.exit("Person not found.")
 
     path = shortest_path(source, target)
 

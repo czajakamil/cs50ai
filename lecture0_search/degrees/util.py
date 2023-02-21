@@ -3,7 +3,6 @@ class Node():
         self.state = state
         self.parent = parent
         self.action = action
-        # We don't need to store the path cost, because we can calculate it on the end
 
 class StackFrontier():
     def __init__(self):
@@ -16,6 +15,9 @@ class StackFrontier():
         return any(node.state == state for node in self.frontier)
 
     def empty(self):
+        """
+        Checks if Frontier is empty
+        """
         return len(self.frontier) == 0
 
     def remove(self):
@@ -28,8 +30,10 @@ class StackFrontier():
 
 
 class QueueFrontier(StackFrontier):
-
     def remove(self):
+        """
+        Removes node from frontier and gives it back
+        """
         if self.empty():
             raise Exception("empty frontier")
         else:
