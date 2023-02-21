@@ -150,9 +150,6 @@ def neighbors_for_person(person_id: int) -> set:
             neighbors.add((movie_id, person_id))
     return neighbors
 
-# Próba rozwiązania TypeError
-def hash(self):
-        return hash(self.person_id) + hash(self.movie_id) + hash(self.parent_id)
 
 def main():
     if len(sys.argv) > 2:
